@@ -160,6 +160,8 @@ class HttpSession
             $this->sessionStorage->remove($this->id);
             $this->response->addCookie("SESSIONID", null);
         }
+        $this->id = null;
+        $this->attribute = [];
     }
 
     private function gid()
