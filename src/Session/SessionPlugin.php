@@ -25,17 +25,18 @@ class SessionPlugin extends AbstractPlugin
      * @var SessionStorage
      */
     protected $sessionStorage;
+
     /**
      * SessionPlugin constructor.
      * @param SessionConfig|null $sessionConfig
      * @throws \DI\DependencyException
      * @throws \ReflectionException
      */
-    public function __construct(?SessionConfig $sessionConfig=null)
+    public function __construct(?SessionConfig $sessionConfig = null)
     {
         parent::__construct();
         $this->atAfter(RedisPlugin::class);
-        if($sessionConfig == null){
+        if ($sessionConfig == null) {
             $sessionConfig = new SessionConfig();
         }
         $this->sessionConfig = $sessionConfig;
@@ -73,6 +74,7 @@ class SessionPlugin extends AbstractPlugin
         $this->sessionConfig->merge();
         $class = $this->sessionConfig->getSessionStorageClass();
         $this->sessionStorage = new $class($this->sessionConfig);
+        $this->setToDIContainer(HttpSession::class, new HttpSessionProxy());
         return;
     }
 

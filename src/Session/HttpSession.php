@@ -158,7 +158,7 @@ class HttpSession
     {
         if ($this->id != null) {
             $this->sessionStorage->remove($this->id);
-            $this->response->addCookie("SESSIONID", null);
+            $this->response->addCookie("SESSIONID", "");
         }
         $this->id = null;
         $this->attribute = [];
