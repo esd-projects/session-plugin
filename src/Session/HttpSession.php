@@ -82,6 +82,13 @@ class HttpSession
     }
 
     /**
+     * refresh 别名
+     */
+    public function create(){
+        $this->refresh();
+    }
+
+    /**
      * 是否可用
      * @return bool
      */
@@ -138,14 +145,19 @@ class HttpSession
         unset($this->attribute[$key]);
     }
 
+
     /**
      * @param string $key
-     * @return mixed|null
+     * @return mixed
      */
-    public function getAttribute(string $key)
+    public function getAttribute( $key = null )
     {
+        if($key == null){
+            return $this->attribute;
+        }
         return $this->attribute[$key] ?? null;
     }
+
 
     /**
      * @return string|null
@@ -155,12 +167,7 @@ class HttpSession
         return $this->id;
     }
 
-    public function save()
-    {
-        if (!empty($this->attribute) && $this->id != null) {
-            $this->sessionStorage->set($this->id, serverSerialize($this->attribute));
-        }
-    }
+
 
     public function invalidate()
     {
@@ -170,6 +177,21 @@ class HttpSession
         }
         $this->id = null;
         $this->attribute = [];
+    }
+
+    /**
+     * invalidate 别名
+     */
+    public function destroy(){
+        $this->invalidate();
+    }
+
+
+    private function save()
+    {
+        if (!empty($this->attribute) && $this->id != null) {
+            $this->sessionStorage->set($this->id, serverSerialize($this->attribute));
+        }
     }
 
     private function gid()
