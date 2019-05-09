@@ -30,6 +30,36 @@ class SessionConfig extends BaseConfig
      */
     protected $sessionStorageClass = RedisSessionStorage::class;
 
+    /**
+     * @var string
+     */
+    protected $domain = '';
+
+
+    /**
+     * @var string
+     */
+    protected $path = '/';
+
+    /**
+     * @var string
+     */
+    protected $sessionName = 'SESSIONID';
+
+
+    /**
+     * @var bool
+     */
+    protected $httpOnly = true;
+
+
+    /**
+     * 是否仅ssl
+     * @var bool
+     */
+    protected $secure = false;
+
+
     public function __construct()
     {
         parent::__construct(self::key);
@@ -66,6 +96,89 @@ class SessionConfig extends BaseConfig
     {
         $this->sessionStorageClass = $sessionStorageClass;
     }
+
+
+    public function getSecure(): bool
+    {
+        return $this->secure;
+    }
+
+    public function setSecure(bool $secure): void {
+        $this->secure = $secure;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getDomain():string
+    {
+        return $this->domain;
+    }
+
+    /**
+     * @param string $domain
+     */
+    public function setDomain(string $domain): void
+    {
+        $this->domain = $domain;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param string $path
+     */
+    public function setPath(string $path) :void
+    {
+        $this->path = $path;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function getHttpOnly():bool
+    {
+        return $this->httpOnly;
+    }
+
+
+    /**
+     * @param bool $bool
+     */
+    public function setHttpOnly(bool $bool): void
+    {
+        $this->httpOnly = $bool;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getSessionName(): string
+    {
+        return $this->sessionName;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setSessionName(string $name): void
+    {
+        $this->sessionName = $name;
+    }
+
+
+
+
+
 
     /**
      * @return string

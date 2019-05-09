@@ -67,8 +67,11 @@ class HttpSession
 
     public function refresh()
     {
+        $c = Server::$instance->getContainer()->get(SessionConfig::class);
+
         $this->id = $this->gid();
-        $this->response->addCookie("SESSIONID", $this->id);
+        $this->response->addCookie($c->getSessionName(), $this->id, time() + $c->getTimeout(), $c->getPath(),
+            $c->getDomain(), $c->getSecure(), $c->getHttpOnly());
         $this->isNew = true;
         $this->setAttribute("createTime", time());
     }
