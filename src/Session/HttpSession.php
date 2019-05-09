@@ -41,16 +41,23 @@ class HttpSession
      */
     protected $response;
 
+
+    /**
+     * @var SessionConfig
+     */
+    protected $config;
+
     public function __construct()
     {
         $plug = Server::$instance->getPlugManager()->getPlug(SessionPlugin::class);
         if ($plug instanceof SessionPlugin) {
             $this->sessionStorage = $plug->getSessionStorage();
         }
+        $this->config = Server::$instance->getContainer()->get(SessionConfig::class);
         setContextValue("HttpSession", $this);
         $this->request = getDeepContextValueByClassName(Request::class);
         $this->response = getDeepContextValueByClassName(Response::class);
-        $this->id = $this->request->getCookie("SESSIONID");
+        $this->id = $this->request->getCookie($this->config->getSessionName());
         if ($this->id != null) {
             $this->isNew = false;
             $result = $this->sessionStorage->get($this->id);
@@ -67,11 +74,9 @@ class HttpSession
 
     public function refresh()
     {
-        $c = Server::$instance->getContainer()->get(SessionConfig::class);
-
         $this->id = $this->gid();
-        $this->response->addCookie($c->getSessionName(), $this->id, time() + $c->getTimeout(), $c->getPath(),
-            $c->getDomain(), $c->getSecure(), $c->getHttpOnly());
+        $this->response->addCookie($this->config->getSessionName(), $this->id, time() + $this->config->getTimeout(),
+            $this->config->getPath(), $this->config->getDomain(), $this->config->getSecure(), $this->config->getHttpOnly());
         $this->isNew = true;
         $this->setAttribute("createTime", time());
     }
@@ -143,9 +148,9 @@ class HttpSession
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
