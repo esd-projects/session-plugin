@@ -74,6 +74,7 @@ class SessionPlugin extends AbstractPlugin
         $this->sessionConfig->merge();
         $class = $this->sessionConfig->getSessionStorageClass();
         $this->sessionStorage = new $class($this->sessionConfig);
+        $this->setToDIContainer(SessionStorage::class, $this->sessionStorage);
         $this->setToDIContainer(HttpSession::class, new HttpSessionProxy());
         return;
     }
