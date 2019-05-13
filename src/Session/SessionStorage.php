@@ -6,7 +6,7 @@
  * Time: 14:43
  */
 
-namespace GoSwoole\Plugins\Session;
+namespace ESD\Plugins\Session;
 
 
 interface SessionStorage

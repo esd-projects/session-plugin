@@ -6,7 +6,7 @@
  * Time: 16:27
  */
 
-namespace GoSwoole\Plugins\Session;
+namespace ESD\Plugins\Session;
 
 
 trait GetSession

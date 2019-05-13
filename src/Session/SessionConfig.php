@@ -6,10 +6,10 @@
  * Time: 14:41
  */
 
-namespace GoSwoole\Plugins\Session;
+namespace ESD\Plugins\Session;
 
 
-use GoSwoole\BaseServer\Plugins\Config\BaseConfig;
+use ESD\BaseServer\Plugins\Config\BaseConfig;
 
 class SessionConfig extends BaseConfig
 {

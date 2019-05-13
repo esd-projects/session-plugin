@@ -6,12 +6,12 @@
  * Time: 14:33
  */
 
-namespace GoSwoole\Plugins\Session;
+namespace ESD\Plugins\Session;
 
-use GoSwoole\BaseServer\Server\Context;
-use GoSwoole\BaseServer\Server\PlugIn\AbstractPlugin;
-use GoSwoole\BaseServer\Server\PlugIn\PluginInterfaceManager;
-use GoSwoole\Plugins\Redis\RedisPlugin;
+use ESD\BaseServer\Server\Context;
+use ESD\BaseServer\Server\PlugIn\AbstractPlugin;
+use ESD\BaseServer\Server\PlugIn\PluginInterfaceManager;
+use ESD\Plugins\Redis\RedisPlugin;
 
 class SessionPlugin extends AbstractPlugin
 {
@@ -46,7 +46,7 @@ class SessionPlugin extends AbstractPlugin
      * @param PluginInterfaceManager $pluginInterfaceManager
      * @return mixed|void
      * @throws \DI\DependencyException
-     * @throws \GoSwoole\BaseServer\Exception
+     * @throws \ESD\BaseServer\Exception
      */
     public function onAdded(PluginInterfaceManager $pluginInterfaceManager)
     {
@@ -67,7 +67,7 @@ class SessionPlugin extends AbstractPlugin
      * 在服务启动前
      * @param Context $context
      * @return mixed
-     * @throws \GoSwoole\BaseServer\Server\Exception\ConfigException
+     * @throws \ESD\BaseServer\Server\Exception\ConfigException
      */
     public function beforeServerStart(Context $context)
     {

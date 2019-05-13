@@ -6,10 +6,10 @@
  * Time: 17:09
  */
 
-namespace GoSwoole\Plugins\Session;
+namespace ESD\Plugins\Session;
 
 
-use GoSwoole\Plugins\Redis\GetRedis;
+use ESD\Plugins\Redis\GetRedis;
 
 class RedisSessionStorage implements SessionStorage
 {

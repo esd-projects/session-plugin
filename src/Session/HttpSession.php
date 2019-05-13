@@ -6,12 +6,12 @@
  * Time: 14:48
  */
 
-namespace GoSwoole\Plugins\Session;
+namespace ESD\Plugins\Session;
 
 
-use GoSwoole\BaseServer\Server\Beans\Request;
-use GoSwoole\BaseServer\Server\Beans\Response;
-use GoSwoole\BaseServer\Server\Server;
+use ESD\BaseServer\Server\Beans\Request;
+use ESD\BaseServer\Server\Beans\Response;
+use ESD\BaseServer\Server\Server;
 
 class HttpSession
 {

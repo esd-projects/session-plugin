@@ -6,7 +6,7 @@
  * Time: 9:19
  */
 
-namespace GoSwoole\Plugins\Session;
+namespace ESD\Plugins\Session;
 
 
 class HttpSessionProxy
