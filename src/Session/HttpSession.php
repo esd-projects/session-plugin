@@ -57,7 +57,7 @@ class HttpSession
         setContextValue("HttpSession", $this);
         $this->request = getDeepContextValueByClassName(Request::class);
         $this->response = getDeepContextValueByClassName(Response::class);
-        if($this->config->getSessionUsage() == 'cookie') {
+        if($this->config->getSessionUsage() == SessionConfig::usage_cookie) {
             $this->id = $this->request->getCookie($this->config->getSessionName());
         }else{
             $authorization = explode(' ',$this->request->getHeader('authorization'));
@@ -82,7 +82,7 @@ class HttpSession
     public function refresh()
     {
         $this->id = $this->gid();
-        if($this->config->getSessionUsage() == 'cookie'){
+        if($this->config->getSessionUsage() == SessionConfig::usage_cookie){
             $this->response->addCookie( $this->config->getSessionName(), $this->id,
                 time() + $this->config->getTimeout(), $this->config->getPath(),
                 $this->config->getDomain(), $this->config->getSecure(), $this->config->getHttpOnly()
