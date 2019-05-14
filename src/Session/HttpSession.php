@@ -79,7 +79,7 @@ class HttpSession
         });
     }
 
-    public function refresh()
+    public function refresh(): void
     {
         $this->id = $this->gid();
         if($this->config->getSessionUsage() == SessionConfig::USAGE_COOKIE){
@@ -91,6 +91,7 @@ class HttpSession
             $this->response->addHeader('Authorization', 'Bearer ' .$this->id);
         }
         $this->setAttribute("createTime", time());
+        $this->setAttribute("expireTime", time() + $this->config->getTimeout());
 
         $this->isNew = true;
     }
@@ -98,7 +99,8 @@ class HttpSession
     /**
      * refresh 别名
      */
-    public function create(){
+    public function create(): void
+    {
         $this->refresh();
     }
 
@@ -157,6 +159,21 @@ class HttpSession
     public function removeAttribute(string $key): void
     {
         unset($this->attribute[$key]);
+    }
+    
+    /**
+     * 刷新token
+     * @return array
+     */
+    public function refreshToken(): void {
+        $id = $this->getId();
+        $this->id = $this->gid();
+        $this->save();
+        $this->sessionStorage->remove($id);
+    }
+
+    public function getExpiretime() : int {
+        return $this->getAttribute('expireTime');
     }
 
 
