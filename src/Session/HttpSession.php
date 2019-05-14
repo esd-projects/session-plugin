@@ -57,7 +57,14 @@ class HttpSession
         setContextValue("HttpSession", $this);
         $this->request = getDeepContextValueByClassName(Request::class);
         $this->response = getDeepContextValueByClassName(Response::class);
-        $this->id = $this->request->getCookie($this->config->getSessionName());
+        if($this->config->getSessionUsage() == SessionConfig::USAGE_COOKIE) {
+            $this->id = $this->request->getCookie($this->config->getSessionName());
+        }else{
+            $authorization = explode(' ',$this->request->getHeader('authorization'));
+            if(isset($authorization[1])){
+                $this->id = $authorization[1];
+            }
+        }
         if ($this->id != null) {
             $this->isNew = false;
             $result = $this->sessionStorage->get($this->id);
@@ -75,10 +82,17 @@ class HttpSession
     public function refresh()
     {
         $this->id = $this->gid();
-        $this->response->addCookie($this->config->getSessionName(), $this->id, time() + $this->config->getTimeout(),
-            $this->config->getPath(), $this->config->getDomain(), $this->config->getSecure(), $this->config->getHttpOnly());
-        $this->isNew = true;
+        if($this->config->getSessionUsage() == SessionConfig::USAGE_COOKIE){
+            $this->response->addCookie( $this->config->getSessionName(), $this->id,
+                time() + $this->config->getTimeout(), $this->config->getPath(),
+                $this->config->getDomain(), $this->config->getSecure(), $this->config->getHttpOnly()
+            );
+        }else{
+            $this->response->addHeader('Authorization', 'Bearer ' .$this->id);
+        }
         $this->setAttribute("createTime", time());
+
+        $this->isNew = true;
     }
 
     /**
