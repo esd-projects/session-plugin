@@ -14,8 +14,8 @@ use ESD\BaseServer\Plugins\Config\BaseConfig;
 class SessionConfig extends BaseConfig
 {
     const key = "session";
-    const usage_cookie = 'cookie';
-    const usage_token = 'token';
+    const USAGE_COOKIE = 'cookie';
+    const USAGE_TOKEN = 'token';
 
     /**
      * 销毁时间s
@@ -34,7 +34,7 @@ class SessionConfig extends BaseConfig
     protected $sessionStorageClass = RedisSessionStorage::class;
 
 
-    protected $sessionUsage = SessionConfig::usage_cookie;
+    protected $sessionUsage = SessionConfig::USAGE_COOKIE;
 
     /**
      * @var string
