@@ -14,6 +14,8 @@ use ESD\BaseServer\Plugins\Config\BaseConfig;
 class SessionConfig extends BaseConfig
 {
     const key = "session";
+    const usage_cookie = 'cookie';
+    const usage_token = 'token';
 
     /**
      * 销毁时间s
@@ -25,10 +27,14 @@ class SessionConfig extends BaseConfig
      * @var string
      */
     protected $db = "default";
+
     /**
      * @var string
      */
     protected $sessionStorageClass = RedisSessionStorage::class;
+
+
+    protected $sessionUsage = SessionConfig::usage_cookie;
 
     /**
      * @var string
@@ -71,6 +77,16 @@ class SessionConfig extends BaseConfig
     public function getTimeout(): int
     {
         return $this->timeout;
+    }
+
+
+    public function getSessionUsage(): string
+    {
+        return $this->sessionUsage;
+    }
+
+    public function setSessionUsage( $usage ): void {
+        $this->sessionUsage = $usage;
     }
 
     /**
