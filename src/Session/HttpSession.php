@@ -160,11 +160,11 @@ class HttpSession
     {
         unset($this->attribute[$key]);
     }
-    
+
     /**
      * 保持并更新 session token
      * 为了安全起见，通过调用该方法，会继续保持session内容，并且创建新的 session_id
-     * @return array
+     * @return void
      */
     public function keepSession(): void {
         $id = $this->getId();
