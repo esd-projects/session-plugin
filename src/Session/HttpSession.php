@@ -79,23 +79,6 @@ class HttpSession
         });
     }
 
-    public function refresh(): void
-    {
-        $this->id = $this->gid();
-        if($this->config->getSessionUsage() == SessionConfig::USAGE_COOKIE){
-            $this->response->addCookie( $this->config->getSessionName(), $this->id,
-                time() + $this->config->getTimeout(), $this->config->getPath(),
-                $this->config->getDomain(), $this->config->getSecure(), $this->config->getHttpOnly()
-            );
-        }else{
-            $this->response->addHeader('Authorization', 'Bearer ' .$this->id);
-        }
-        $this->setAttribute("createTime", time());
-        $this->setAttribute("expireTime", time() + $this->config->getTimeout());
-
-        $this->isNew = true;
-    }
-
     /**
      * refresh 别名
      */
@@ -160,17 +143,9 @@ class HttpSession
     {
         unset($this->attribute[$key]);
     }
-
-    /**
-     * 保持并更新 session token
-     * 为了安全起见，通过调用该方法，会继续保持session内容，并且创建新的 session_id
-     * @return void
-     */
-    public function keepSession(): void {
-        $id = $this->getId();
+    public function refresh(): void
+    {
         $this->id = $this->gid();
-        $this->save();
-        $this->sessionStorage->remove($id);
         if($this->config->getSessionUsage() == SessionConfig::USAGE_COOKIE){
             $this->response->addCookie( $this->config->getSessionName(), $this->id,
                 time() + $this->config->getTimeout(), $this->config->getPath(),
@@ -179,9 +154,13 @@ class HttpSession
         }else{
             $this->response->addHeader('Authorization', 'Bearer ' .$this->id);
         }
+        $this->setAttribute("createTime", time());
+        $this->setAttribute("expireTime", time() + $this->config->getTimeout());
+
+        $this->isNew = true;
     }
 
-    public function getExpiretime() : int {
+    public function getExpireTime() : int {
         return $this->getAttribute('expireTime');
     }
 
