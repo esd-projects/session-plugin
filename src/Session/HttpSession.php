@@ -146,7 +146,9 @@ class HttpSession
     public function refresh(): void
     {
         $id = $this->getId();
-        $this->sessionStorage->remove($id);
+        if($id!=null) {
+            $this->sessionStorage->remove($id);
+        }
         $this->id = $this->gid();
         if($this->config->getSessionUsage() == SessionConfig::USAGE_COOKIE){
             $this->response->addCookie( $this->config->getSessionName(), $this->id,
