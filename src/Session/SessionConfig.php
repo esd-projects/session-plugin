@@ -9,7 +9,7 @@
 namespace ESD\Plugins\Session;
 
 
-use ESD\BaseServer\Plugins\Config\BaseConfig;
+use ESD\Core\Plugins\Config\BaseConfig;
 
 class SessionConfig extends BaseConfig
 {
@@ -190,11 +190,6 @@ class SessionConfig extends BaseConfig
     {
         $this->sessionName = $name;
     }
-
-
-
-
-
 
     /**
      * @return string

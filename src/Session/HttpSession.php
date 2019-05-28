@@ -8,10 +8,9 @@
 
 namespace ESD\Plugins\Session;
 
-
-use ESD\BaseServer\Server\Beans\Request;
-use ESD\BaseServer\Server\Beans\Response;
-use ESD\BaseServer\Server\Server;
+use ESD\Core\Server\Beans\Request;
+use ESD\Core\Server\Beans\Response;
+use ESD\Core\Server\Server;
 
 class HttpSession
 {
@@ -47,13 +46,18 @@ class HttpSession
      */
     protected $config;
 
+    /**
+     * HttpSession constructor.
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
     public function __construct()
     {
         $plug = Server::$instance->getPlugManager()->getPlug(SessionPlugin::class);
         if ($plug instanceof SessionPlugin) {
             $this->sessionStorage = $plug->getSessionStorage();
         }
-        $this->config = Server::$instance->getContainer()->get(SessionConfig::class);
+        $this->config = DIGet(SessionConfig::class);
         setContextValue("HttpSession", $this);
         $this->request = getDeepContextValueByClassName(Request::class);
         $this->response = getDeepContextValueByClassName(Response::class);

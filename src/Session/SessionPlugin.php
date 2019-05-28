@@ -8,9 +8,9 @@
 
 namespace ESD\Plugins\Session;
 
-use ESD\BaseServer\Server\Context;
-use ESD\BaseServer\Server\PlugIn\AbstractPlugin;
-use ESD\BaseServer\Server\PlugIn\PluginInterfaceManager;
+use ESD\Core\Context\Context;
+use ESD\Core\PlugIn\AbstractPlugin;
+use ESD\Core\PlugIn\PluginInterfaceManager;
 use ESD\Plugins\Redis\RedisPlugin;
 
 class SessionPlugin extends AbstractPlugin
@@ -31,6 +31,7 @@ class SessionPlugin extends AbstractPlugin
      * @param SessionConfig|null $sessionConfig
      * @throws \DI\DependencyException
      * @throws \ReflectionException
+     * @throws \DI\NotFoundException
      */
     public function __construct(?SessionConfig $sessionConfig = null)
     {
@@ -46,7 +47,8 @@ class SessionPlugin extends AbstractPlugin
      * @param PluginInterfaceManager $pluginInterfaceManager
      * @return mixed|void
      * @throws \DI\DependencyException
-     * @throws \ESD\BaseServer\Exception
+     * @throws \DI\NotFoundException
+     * @throws \ESD\Core\Exception
      */
     public function onAdded(PluginInterfaceManager $pluginInterfaceManager)
     {
@@ -67,7 +69,10 @@ class SessionPlugin extends AbstractPlugin
      * 在服务启动前
      * @param Context $context
      * @return mixed
-     * @throws \ESD\BaseServer\Server\Exception\ConfigException
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \ESD\Core\Plugins\Config\ConfigException
+     * @throws \Exception
      */
     public function beforeServerStart(Context $context)
     {
