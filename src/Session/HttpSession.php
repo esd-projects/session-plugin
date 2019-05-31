@@ -63,7 +63,7 @@ class HttpSession
         if($this->config->getSessionUsage() == SessionConfig::USAGE_COOKIE) {
             $this->id = $this->request->getCookieParams()[$this->config->getSessionName()];
         }else{
-            $authorization = explode(' ',$this->request->getHeader('authorization'));
+            $authorization = explode(' ',$this->request->getHeaderLine('authorization'));
             if(isset($authorization[1])){
                 $this->id = $authorization[1];
             }
