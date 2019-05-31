@@ -8,6 +8,7 @@
 
 namespace ESD\Plugins\Session;
 
+use ESD\Core\Server\Beans\Http\Cookie;
 use ESD\Core\Server\Beans\Request;
 use ESD\Core\Server\Beans\Response;
 use ESD\Core\Server\Server;
@@ -153,12 +154,11 @@ class HttpSession
         }
         $this->id = $this->gid();
         if($this->config->getSessionUsage() == SessionConfig::USAGE_COOKIE){
-            $this->response->addCookie( $this->config->getSessionName(), $this->id,
+            $this->response->withCookie(new Cookie($this->config->getSessionName(), $this->id,
                 time() + $this->config->getTimeout(), $this->config->getPath(),
-                $this->config->getDomain(), $this->config->getSecure(), $this->config->getHttpOnly()
-            );
+                $this->config->getDomain(), $this->config->getSecure(), $this->config->getHttpOnly()));
         }else{
-            $this->response->addHeader('Authorization', 'Bearer ' .$this->id);
+            $this->response->withHeader('Authorization', 'Bearer ' .$this->id);
         }
         $this->setAttribute("createTime", time());
         $this->setAttribute("expireTime", time() + $this->config->getTimeout());
@@ -198,7 +198,7 @@ class HttpSession
     {
         if ($this->id != null) {
             $this->sessionStorage->remove($this->id);
-            $this->response->addCookie("SESSIONID", "");
+            $this->response->withCookie(new Cookie("SESSIONID", ""));
         }
         $this->id = null;
         $this->attribute = [];
