@@ -61,7 +61,7 @@ class HttpSession
         $this->request = getDeepContextValueByClassName(Request::class);
         $this->response = getDeepContextValueByClassName(Response::class);
         if($this->config->getSessionUsage() == SessionConfig::USAGE_COOKIE) {
-            $this->id = $this->request->getCookieParams()[$this->config->getSessionName()];
+            $this->id = $this->request->getCookieParams()[$this->config->getSessionName()] ?? null;
         }else{
             $authorization = explode(' ',$this->request->getHeaderLine('authorization'));
             if(isset($authorization[1])){
