@@ -29,9 +29,7 @@ class SessionPlugin extends AbstractPlugin
     /**
      * SessionPlugin constructor.
      * @param SessionConfig|null $sessionConfig
-     * @throws \DI\DependencyException
      * @throws \ReflectionException
-     * @throws \DI\NotFoundException
      */
     public function __construct(?SessionConfig $sessionConfig = null)
     {
@@ -46,8 +44,6 @@ class SessionPlugin extends AbstractPlugin
     /**
      * @param PluginInterfaceManager $pluginInterfaceManager
      * @return mixed|void
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
      * @throws \ESD\Core\Exception
      */
     public function onAdded(PluginInterfaceManager $pluginInterfaceManager)
@@ -69,8 +65,6 @@ class SessionPlugin extends AbstractPlugin
      * 在服务启动前
      * @param Context $context
      * @return mixed
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
      * @throws \ESD\Core\Plugins\Config\ConfigException
      * @throws \Exception
      */
