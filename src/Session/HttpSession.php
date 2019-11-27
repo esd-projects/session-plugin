@@ -60,9 +60,14 @@ class HttpSession
         setContextValue("HttpSession", $this);
         $this->request = getDeepContextValueByClassName(Request::class);
         $this->response = getDeepContextValueByClassName(Response::class);
+
         if($this->config->getSessionUsage() == SessionConfig::USAGE_COOKIE) {
             $this->id = $this->request->getCookieParams()[$this->config->getSessionName()] ?? null;
-        }else{
+        } elseif ($this->config->getSessionUsage() == SessionConfig::USEAGE_HEADER) {
+            /** @var array $_sesionIdentify */
+            $_sesionIdentify = $this->request->getHeader(SessionConfig::HEADER_IDENTIFY);
+            $this->id = !empty($_sesionIdentify[0]) ? $_sesionIdentify[0] : null;
+        } else{
             $authorization = explode(' ',$this->request->getHeaderLine('authorization'));
             if(isset($authorization[1])){
                 $this->id = $authorization[1];

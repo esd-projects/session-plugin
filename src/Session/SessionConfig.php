@@ -13,8 +13,29 @@ use ESD\Core\Plugins\Config\BaseConfig;
 
 class SessionConfig extends BaseConfig
 {
+    /**
+     * Session key
+     */
     const key = "session";
+
+    /**
+     * Usage cookie
+     */
     const USAGE_COOKIE = 'cookie';
+
+    /**
+     * Usage head
+     */
+    const USEAGE_HEADER = 'header';
+
+    /**
+     * Header identify to identify session
+     */
+    const HEADER_IDENTIFY = 'sessionId';
+
+    /**
+     * Usage token
+     */
     const USAGE_TOKEN = 'token';
 
     /**
@@ -35,6 +56,13 @@ class SessionConfig extends BaseConfig
 
 
     protected $sessionUsage = SessionConfig::USAGE_COOKIE;
+
+    /**
+     * Header identity. When $sessionUsage is set to header, should set $headerIdentity
+     *
+     * @var string
+     */
+    protected $headerIdentity = SessionConfig::HEADER_IDENTIFY;
 
     /**
      * @var string
